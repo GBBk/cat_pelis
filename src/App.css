@@ -1,0 +1,68 @@
+.main-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 5rem;
+  list-style: none;
+}
+
+.movie {
+  text-align: center;
+}
+
+.movie h3,
+.movie p {
+  padding: 0;
+}
+
+.movie img {
+  border-radius: 8px;
+  width: 100%;
+}
+
+.loading {
+  text-align: center;
+  height: 100vh;
+  font-size: 4rem;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.logo {
+  width: 100px;
+}
+
+.input-color {
+  color: white;
+  background-color: #161f27;
+}
