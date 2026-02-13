@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect } from "react";
-import useFetch from "./hooks/useFetch";
-import { getCurrentSession } from "./db/apiAuth";
+import useFetch from "../hooks/useFetch";
+import { getCurrentSession } from "../db/apiAuth";
 import type { User } from "@supabase/supabase-js";
 
 interface AuthContextType {
@@ -27,7 +27,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const UrlState = () => {
+export const AuthState = () => {
   return useContext(AuthContext);
 };
 

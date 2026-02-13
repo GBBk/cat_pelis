@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { Button } from "@/components/ui/button";
 import useSearch from "@/hooks/useSearch";
+import { BarLoader } from "react-spinners";
 
 function LandingPage() {
   const { search, setUpdateSearch, error } = useSearch();
@@ -54,7 +55,7 @@ function LandingPage() {
           {error && <p style={{ color: "red" }}>{error.message}</p>}
         </header>
         {loading ? (
-          <p className="loading text-4xl text-white">Loading...</p>
+          <BarLoader width={"100%"} color="#36d7b7" />
         ) : (
           <Movies movies={movies} />
         )}

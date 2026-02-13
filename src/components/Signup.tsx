@@ -17,7 +17,7 @@ import { ValidationError } from "yup";
 import useFetch from "@/hooks/useFetch";
 import { signup } from "@/db/apiAuth";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { UrlState } from "@/context";
+import { AuthState } from "@/context/context";
 
 type FormErrors = Record<string, string>;
 
@@ -50,7 +50,7 @@ const Signup = () => {
     profile_pic: formData.profile_pic,
   });
 
-  const { fetchUser } = UrlState();
+  const { fetchUser } = AuthState();
 
   useEffect(() => {
     if (error === null && data) {

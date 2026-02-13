@@ -17,7 +17,7 @@ import { ValidationError } from "yup";
 import useFetch from "@/hooks/useFetch";
 import { login } from "@/db/apiAuth";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { UrlState } from "@/context";
+import { AuthState } from "@/context/context";
 
 type FormErrors = Record<string, string>;
 
@@ -43,7 +43,7 @@ const Login = () => {
     fn: fnLogin,
   } = useFetch(login, { email: formData.email, password: formData.password });
 
-  const { fetchUser } = UrlState();
+  const { fetchUser } = AuthState();
 
   useEffect(() => {
     if (error === null && data) {

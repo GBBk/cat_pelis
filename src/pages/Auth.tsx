@@ -1,13 +1,13 @@
 import Login from "@/components/Login";
 import Signup from "@/components/Signup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UrlState } from "@/context";
+import { AuthState } from "@/context/context";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, loading } = UrlState();
+  const { isAuthenticated, loading } = AuthState();
 
   useEffect(() => {
     if (isAuthenticated && !loading) navigate("/");

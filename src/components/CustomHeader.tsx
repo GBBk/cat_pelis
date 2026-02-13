@@ -16,13 +16,13 @@ import { Link, useNavigate } from "react-router";
 import logo from "@/images/logo-buscador-pelis.png";
 import { Button } from "./ui/button";
 import { BookmarkIcon, LogOutIcon, StarIcon } from "lucide-react";
-import { UrlState } from "@/context";
+import { AuthState } from "@/context/context";
 import useFetch from "@/hooks/useFetch";
 import { logout } from "@/db/apiAuth";
 import { BarLoader } from "react-spinners";
 
 export const CustomHeader = () => {
-  const { user, fetchUser } = UrlState();
+  const { user, fetchUser } = AuthState();
   const navigate = useNavigate();
 
   const { loading, fn: fnLogout } = useFetch(logout);
@@ -52,13 +52,21 @@ export const CustomHeader = () => {
                   {user?.user_metadata?.name}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    navigate("/favoritas");
+                  }}
+                >
                   <StarIcon className="mr-1 h-4 w-4" />
                   <span>Películas favoritas</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    navigate("/movielist");
+                  }}
+                >
                   <BookmarkIcon className="mr-1 h-4 w-4" />
-                  <span>Watchlist</span>
+                  <span>Movielist</span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuGroup>

@@ -1,6 +1,10 @@
 import type { MovieType } from "@/types";
+import MovieFooter from "./MovieFooter";
+import { AuthState } from "@/context/context";
 
 export const ListOfMovies = ({ movies }: { movies: MovieType[] }) => {
+  const { isAuthenticated } = AuthState();
+
   return (
     <ul className="movies">
       {movies.map((movie) => (
@@ -8,6 +12,7 @@ export const ListOfMovies = ({ movies }: { movies: MovieType[] }) => {
           <h3 className="text-2xl">{movie.title}</h3>
           <p className="">{movie.year}</p>
           <img src={movie.poster} alt={movie.title} />
+          {isAuthenticated && <MovieFooter movie={movie} />}
         </li>
       ))}
     </ul>

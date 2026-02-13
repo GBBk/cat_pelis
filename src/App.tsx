@@ -3,11 +3,12 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import Auth from "./pages/Auth";
-import Favorites from "./pages/Favorites";
+import Favorites from "@/pages/Favorites";
 import Watchlist from "./pages/Watchlist";
 import AppLayout from "./layouts/AppLayout";
-import AuthProvider from "./context";
+import AuthProvider from "./context/context";
 import RequireAuth from "./components/RequireAuth";
+import { MovieProvider } from "./context/MovieProvider";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,7 +24,7 @@ function App() {
           element: <Auth />,
         },
         {
-          path: "/link/:id",
+          path: "/favoritas",
 
           element: (
             <RequireAuth>
@@ -32,7 +33,7 @@ function App() {
           ),
         },
         {
-          path: "/:id",
+          path: "/movielist",
           element: (
             <RequireAuth>
               <Watchlist />
@@ -45,7 +46,9 @@ function App() {
 
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <MovieProvider>
+        <RouterProvider router={router} />
+      </MovieProvider>
     </AuthProvider>
   );
 }
