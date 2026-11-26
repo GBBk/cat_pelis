@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# Buscador de películas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Buscador de películas y series sobre la API de OMDb, con búsqueda mientras escribís, orden por título y listas personales de favoritas y de "ya vistas" para usuarios registrados.
 
-Currently, two official plugins are available:
+**Demo:** _próximamente_
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<!-- Agregá acá una captura: ![Buscador](docs/buscador.png) -->
 
-## React Compiler
+## Funcionalidades
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- Búsqueda con debounce de 300 ms para no llamar a la API en cada tecla.
+- Orden alfabético opcional, calculado con `useMemo`.
+- Mensajes claros para "sin resultados", "demasiados resultados" y errores de red.
+- Registro e inicio de sesión con Supabase Auth; rutas protegidas para las listas.
+- Favoritas y "ya vistas" por usuario, manejadas con Context API.
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Capa | Tecnologías |
+| --- | --- |
+| Frontend | React 19, TypeScript, Vite, React Router 7 |
+| UI | Tailwind CSS 4, shadcn/ui (Radix), lucide-react |
+| Datos | OMDb API, Supabase Auth |
+| Calidad | ESLint, Vitest, GitHub Actions |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Estructura
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+  services/movies.ts   llamada a OMDb y conversión al modelo de la app (con tests)
+  hooks/               useMovies, useSearch, useFetch
+  context/             sesión del usuario y listas de películas
+  pages/               búsqueda, favoritas, ya vistas, login
+  components/          tarjetas, header, formularios y componentes de shadcn/ui
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Correrlo localmente
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Requisitos: Node 20 o superior, un proyecto de Supabase y una clave gratuita de [OMDb](https://www.omdbapi.com/apikey.aspx).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/GBBk/cat_pelis.git
+cd cat_pelis
+npm install
+cp .env.example .env   # completar Supabase y OMDb
+npm run dev
 ```
+
+## Scripts
+
+| Comando | Qué hace |
+| --- | --- |
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Chequeo de tipos y build de producción |
+| `npm run lint` | ESLint |
+| `npm test` | Tests unitarios con Vitest |
+
+## Deploy
+
+Incluye `vercel.json` para que las rutas funcionen al recargar. En Vercel, importá el repo y cargá las tres variables de `.env.example`.
+
+## Próximas mejoras
+
+- Guardar favoritas y vistas en Supabase (hoy viven en `localStorage`) para sincronizarlas entre dispositivos.
+- Página de detalle de cada película.
+- Paginación de resultados.
