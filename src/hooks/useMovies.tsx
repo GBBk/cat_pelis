@@ -5,7 +5,7 @@ import type { ErrorType, MovieType } from "@/types";
 export function useMovies({ search, sort }: { search: string; sort: boolean }) {
   const [movies, setMovies] = useState<MovieType[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<ErrorType>({message: ""});
+  const [error, setError] = useState<ErrorType>({message: null});
   const previousSearch = useRef(search)
 
   const getMovies = useCallback(async ({search}: {search: string}) => {
@@ -17,7 +17,7 @@ export function useMovies({ search, sort }: { search: string; sort: boolean }) {
           const newMovies = await searchMovies({search})
           setMovies(newMovies);
         } catch (e) {
-          setError(e as ErrorType);
+          setError({ message: e instanceof Error ? e.message : "Error al buscar películas" });
         } finally {
           setLoading(false);
         }
