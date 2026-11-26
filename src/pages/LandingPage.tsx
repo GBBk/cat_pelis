@@ -10,8 +10,8 @@ import { BarLoader } from "react-spinners";
 function LandingPage() {
   const { search, setUpdateSearch, error } = useSearch();
   const [sort, setSort] = useState(false);
-  const { movies, getMovies, loading } = useMovies({ search, sort });
-  const debounceGetMovies = useDebouncedCallback((search) => {
+  const { movies, getMovies, loading, error: moviesError } = useMovies({ search, sort });
+  const debounceGetMovies = useDebouncedCallback((search: string) => {
     getMovies({ search });
   }, 300);
 
@@ -45,9 +45,13 @@ function LandingPage() {
               onChange={handleChange}
               value={search}
               name="query"
+              aria-label="Buscar películas"
               placeholder="Avengers, Star Wars, The Matrix..."
             />
-            <input type="checkbox" onChange={handleSort} checked={sort} />
+            <label className="flex items-center gap-1 text-white">
+              <input type="checkbox" onChange={handleSort} checked={sort} />
+              Ordenar por título
+            </label>
             <Button type="submit" className="p-6 text">
               Buscar
             </Button>
@@ -56,6 +60,8 @@ function LandingPage() {
         </header>
         {loading ? (
           <BarLoader width={"100%"} color="#36d7b7" />
+        ) : moviesError.message ? (
+          <p className="text-2xl text-center" style={{ color: "red" }}>{moviesError.message}</p>
         ) : (
           <Movies movies={movies} />
         )}
